@@ -9,19 +9,20 @@
     };
   };
 
-  outputs = { self, nixpkgs, rust-overlay }:
+  outputs = { self, ... }@inputs:
     let
+      inherit (inputs.nixpkgs) lib;
       supportedSystems = [
         "x86_64-linux" # 64-bit Intel/AMD Linux
         "aarch64-linux" # 64-bit ARM Linux
         "aarch64-darwin" # 64-bit ARM macOS
       ];
-      forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f {
-        pkgs = import nixpkgs {
+      forAllSystems = f: lib.genAttrs supportedSystems (system: f {
+        pkgs = import inputs.nixpkgs {
           inherit system;
           overlays = [
             self.overlays.nuenv # Supply nixpkgs.nuenv.mkDerivation
-            rust-overlay.overlays.default
+            inputs.rust-overlay.overlays.default
             (final: prev: {
               rustToolchain = prev.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
             })
@@ -31,8 +32,8 @@
       });
     in
     {
-      overlays = rec {
-        default = nuenv;
+      overlays = {
+        default = self.overlays.nuenv;
 
         nuenv = final: prev: {
           nuenv = {
@@ -40,7 +41,7 @@
               # Provide Nushell package
               prev.nushell
               # Provide default system
-              prev.system;
+              prev.stdenv.hostPlatform.system;
 
             writeScriptBin = self.lib.mkNushellScript
               # Provide Nushell package
@@ -148,8 +149,8 @@
         };
       });
 
-      packages = forAllSystems ({ pkgs, system }: rec {
-        default = hello;
+      packages = forAllSystems ({ pkgs, system }: {
+        default = self.packages.${system}.hello;
 
         run-me = pkgs.nuenv.writeScriptBin {
           name = "run-me";
