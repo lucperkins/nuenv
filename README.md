@@ -27,7 +27,7 @@ With Nix installed, you can [realise] a Nix [derivation] that uses Nushell rathe
 nix build --print-build-logs
 
 # Or without cloning this repo
-nix build --print-build-logs "https://flakehub.com/f/DeterminateSystems/nuenv/*.tar.gz"
+nix build --print-build-logs "https://flakehub.com/f/DeterminateSystems/nuenv/0.1"
 ```
 
 You should see build output like this:
@@ -76,8 +76,8 @@ Here's a straightforward example:
 ```nix
 {
   inputs = {
-    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.2311.*.tar.gz";
-    nuenv.url = "https://flakehub.com/f/DeterminateSystems/nuenv/*.tar.gz";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
+    nuenv.url = "https://flakehub.com/f/DeterminateSystems/nuenv/0.1";
   };
 
   outputs = { self, nixpkgs, nuenv }: let
@@ -124,8 +124,8 @@ Here's an example:
 # This example is only for x86_64-linux; adjust for your own platform
 {
   inputs = {
-    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.2311.*.tar.gz";
-    nuenv.url = "https://flakehub.com/f/DeterminateSystems/nuenv/*.tar.gz";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
+    nuenv.url = "https://flakehub.com/f/DeterminateSystems/nuenv/0.1";
   };
 
   outputs = { self, nixpkgs, nuenv }: let

@@ -3,8 +3,8 @@
 
   inputs = {
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1"; # Provides Nushell v0.111.0
-    rust-overlay = {
-      url = "https://flakehub.com/f/oxalica/rust-overlay/0.1";
+    fenix = {
+      url = "https://flakehub.com/f/nix-community/fenix/0.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -22,9 +22,23 @@
           inherit system;
           overlays = [
             self.overlays.nuenv # Supply nixpkgs.nuenv.mkDerivation
-            inputs.rust-overlay.overlays.default
+
             (final: prev: {
-              rustToolchain = prev.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
+              rustToolchain = with inputs.fenix.packages.${system};
+            combine (
+              with stable;
+              [
+                clippy
+                rustc
+                cargo
+                rustfmt
+                rust-src
+                rust-analyzer
+              ]
+              ++ inputs.nixpkgs.lib.optionals (staticTarget != null) [
+                targets.${staticTarget}.stable.rust-std
+              ]
+            );
             })
           ];
         };
