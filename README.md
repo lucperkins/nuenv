@@ -3,7 +3,7 @@
 [![FlakeHub](https://img.shields.io/endpoint?url=https://flakehub.com/f/DeterminateSystems/nuenv/badge)](https://flakehub.com/flake/DeterminateSystems/nuenv)
 ![GitHub Actions status badge](https://github.com/DeterminateSystems/nuenv/actions/workflows/ci.yml/badge.svg?branch=main)
 
-> [!INFO]
+> [!NOTE]
 > Nuenv was a fun and instructive experiment but we don't plan to develop it further at this time, so we've opted to archive this repository.
 > To read more about Nuenv, see the [Nuenv: an experimental Nushell environment for Nix][post] blog post on the [Determinate Systems blog][blog] and the [Nuenv: an experimental derivation builder for Nix][talk] talk at NixCon 2023.
 > Going forward, you're free to use this project [as you see fit](./LICENSE)!
