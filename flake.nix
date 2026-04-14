@@ -2,9 +2,9 @@
   description = "Nuenv: a Nushell environment for Nix";
 
   inputs = {
-    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1.*.tar.gz"; # Provides Nushell v0.87.1
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1"; # Provides Nushell v0.111.0
     rust-overlay = {
-      url = "github:oxalica/rust-overlay";
+      url = "https://flakehub.com/f/oxalica/rust-overlay/0.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -14,7 +14,6 @@
       supportedSystems = [
         "x86_64-linux" # 64-bit Intel/AMD Linux
         "aarch64-linux" # 64-bit ARM Linux
-        "x86_64-darwin" # 64-bit Intel macOS
         "aarch64-darwin" # 64-bit ARM macOS
       ];
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f {
